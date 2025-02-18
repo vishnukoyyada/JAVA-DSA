@@ -2,36 +2,41 @@ package Arrays;
 
 import java.util.ArrayList;
 
-public class Solution {
+public class Solution{
     public static void main(String[] args) {
-       int[] nums = {1,2,3,4,5,6,7};
-       int[] nums1= {3,4,5,6,7,8};
-       ArrayList<Integer> ans = new ArrayList<>();
-       for(int i =0;i<nums.length;i++){
-        ans.add(nums[i]);
-       }
-       for(int i = 0;i<nums1.length;i++){
-        if(search(nums, nums1[i])){
-        }else{
-            ans.add(nums1[i]);
-        }
-
-       }
-       for(int num:ans){
-        System.out.println(num);
-       }
-
-
-    }
-    static boolean search(int[] arr, int num){
-        boolean ans = false;
-        for(int temp:arr){
-            if(temp == num){
-                ans = true;
-                break;
+        int[] arr1= {1,1,2,3,4,5};
+        int[] arr2 = {1,1,2,2,2,3};
+        int i =0,j = 0;
+        ArrayList<Integer> ans = new ArrayList<>();
+        int n = arr1.length,m = arr2.length;
+        while(i < n && j<m) {
+            if (arr1[i] <= arr2[j]) {
+                if (ans.isEmpty() || ans.get(ans.size() - 1) != arr1[i]) {
+                    ans.add(arr1[i]);
+                }
+                i++;
+            } else {
+                if (ans.isEmpty() || ans.get(ans.size() - 1) != arr2[j]) {
+                    ans.add(arr2[j]);
+                }
+                j++;
             }
         }
+            while(i<n){
+                if(ans.isEmpty() || ans.get(ans.size() -1) != arr1[i]){
+                    ans.add(arr1[i]);
+                }
+                i++;
+            }
+            while(j<m){
+                if(ans.isEmpty() || ans.get(ans.size() -1) != arr2[j]){
+                    ans.add(arr2[j]);
+                }
+                j++;
+            }
 
-        return ans;
+        for(int num:ans){
+            System.out.println(num);
+        }
     }
 }
