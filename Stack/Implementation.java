@@ -2,7 +2,7 @@ package Stack;
 
 
 class Stack{
-    int top = -1;
+    int top ;
     int size ;
     int[] data;
 
@@ -10,6 +10,7 @@ class Stack{
         this(10);
     }
     Stack(int size ){
+        top = -1;
         this.size = size;
         this.data = new int[size];
     }
@@ -21,14 +22,19 @@ class Stack{
         data[++top] = val;
 
     }
-    public void Display(){
-        for(int num:data){
-            System.out.println(num);
+    public void Display() {
+        if (top == -1) {
+            System.out.println("Stack is empty");
+            return;
+        }
+        for (int i = top; i >= 0; i--) {
+            System.out.println(data[i]);
         }
     }
     public int pop(){
         if(top == -1){
             System.out.println("Stack underflow");
+            return -1;
         }
         return data[top--];
     }
