@@ -1,48 +1,56 @@
 package Queue;
 
-
-class Queue{
+class Queue {
     int[] data;
-    int front,rear,size;
-    Queue(){
+    int front, size;
+
+    Queue() {
         this(5);
     }
-    Queue(int size){
-        this.size = size;
-         this.data = new int[size];
-       this.rear = -1;
-       this.front = 0;
-    }
-    public void enqueue(int val){
-        if(rear == size-1){
-            System.out.println("overflow");
-        }
-        rear = (rear +1)%size;
-        data[rear] = val;
 
+    Queue(int size) {
+        this.size = size;
+        this.data = new int[size];
+        this.front = 0;
     }
-    public int  dequeue(){
-        if(front > rear){
-            System.out.println("underflow");
+
+    public void enqueue(int val) {
+        if (front == size) { // Check for overflow
+            System.out.println("Overflow");
+            return;
+        }
+        data[front] = val;
+        front++;
+    }
+
+    public int dequeue() {
+        if (front == 0) { // Check for underflow
+            System.out.println("Underflow");
             return -1;
         }
-        return data[front--];
+        int temp = data[0];
+
+        // Shift elements to the left
+        for (int i = 1; i < front; i++) {
+            data[i - 1] = data[i];
+        }
+        front--; // Reduce front index after shifting
+
+        return temp;
     }
-    public void display(){
-        if (front == -1) {
+
+    public void display() {
+        if (front == 0) {
             System.out.println("Queue is empty");
             return;
         }
-        System.out.print("Queue: ");
-        int i = front;
-        while (true) {
+        for (int i = 0; i < front; i++) {
             System.out.print(data[i] + " ");
-            if (i == rear) break;
-            i = (i + 1) % size;
         }
         System.out.println();
     }
 }
+
 public class Implementation {
     public static void main(String[] args) {
         Queue queue = new Queue(5);
@@ -51,12 +59,14 @@ public class Implementation {
         queue.enqueue(20);
         queue.enqueue(30);
         queue.enqueue(40);
-        queue.enqueue(60);
+        queue.enqueue(50);
 
         queue.display(); // Expected: 10 20 30 40 50
 
-        System.out.println("Dequeued: " + queue.dequeue()); // Expected: 10// Expected: 20
+        queue.dequeue();
+        queue.display(); // Expected: 20 30 40 50
 
-        queue.display();
+        queue.dequeue();
+        queue.display(); // Expected: 30 40 50
     }
 }
